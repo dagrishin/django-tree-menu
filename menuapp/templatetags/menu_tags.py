@@ -7,10 +7,13 @@ register = template.Library()
 
 
 def get_menu_items(menu_name, current_url, parent=None):
-    menu_items = MenuItem.objects.filter(menu_name=menu_name, parent=parent)
+    if parent:
+        menu_items = MenuItem.objects.filter(menu_name=menu_name, parent=parent)
+    else:
+        menu_items = MenuItem.objects.filter(menu_name=menu_name)
     result = []
     for item in menu_items:
-        is_active = current_url == item.url or (item.named_url and item.named_url == current_url)
+        is_active = current_url == item.url or (item.url and current_url.startswith(item.url))
         result.append({
             'title': item.title,
             'url': item.url if item.url else reverse(item.named_url) if item.named_url else '',
