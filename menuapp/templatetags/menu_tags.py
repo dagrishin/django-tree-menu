@@ -1,5 +1,6 @@
 from django import template
 from django.urls import reverse
+from django.utils.safestring import mark_safe
 
 from menuapp.models import MenuItem
 
@@ -35,7 +36,7 @@ def render_menu(menu_items):
         item_html = f'<li class="{active_class}"><a href="{url}">{item["title"]}</a>{children_html}</li>'
         items_html += item_html
 
-    return f'<ul>{items_html}</ul>'
+    return mark_safe(f'<ul>{items_html}</ul>')
 
 
 @register.simple_tag(takes_context=True)
