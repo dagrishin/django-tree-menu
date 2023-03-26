@@ -35,5 +35,10 @@ class MenuItem(models.Model):
                   "Это позволяет иметь несколько меню на сайте и использовать их на разных страницах.",
     )
 
+    order = models.PositiveIntegerField(default=0)
+
+    class Meta:
+        ordering = ['order', 'title']
+
     def __str__(self):
         return self.title
